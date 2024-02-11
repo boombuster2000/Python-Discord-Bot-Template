@@ -61,5 +61,5 @@ async def on_message(message):
 async def ping(interaction:discord.Interaction) -> None:
     await interaction.response.send_message("pong", ephemeral=True)
 
-if config: run_bot(client, command_tree, config)
+if config: run_bot(client, config)
 
