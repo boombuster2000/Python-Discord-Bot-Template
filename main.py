@@ -39,17 +39,17 @@ if not config: print("Fill in the details in [./config.json].")
 intents = discord.Intents.default()
 intents.message_content = True
 
-client = commands.Bot(command_prefix="$", intents=intents)
+bot = commands.Bot(command_prefix="$", intents=intents)
 
-@client.event
+@bot.event
 async def on_ready():
-    guild = await client.fetch_guild(config['dev-guild-id'])
+    guild = await bot.fetch_guild(config['dev-guild-id'])
     #await sync_app_commands(command_tree, guild) # Uncomment to sync commands
-    print(f'We have logged in as {client.user}')
+    print(f'We have logged in as {bot.user}')
 
-@client.tree.command(name="ping", description="Replies with \"pong\".")
+@bot.tree.command(name="ping", description="Replies with \"pong\".")
 async def ping(interaction:discord.Interaction) -> None:
     await interaction.response.send_message("pong", ephemeral=True)
 
-if config: run_bot(client, config)
+if config: run_bot(bot, config)
 
