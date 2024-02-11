@@ -25,21 +25,7 @@ async def sync_app_commands(command_tree:CommandTree, guild:discord.Guild = None
 
     print(f"Total Commands Synced: {len(commands_synced)}\n")
 
-def run_bot(client:discord.Client, command_tree:CommandTree, config:dict):
-    @client.event
-    async def on_ready():
-        guild = await client.fetch_guild(config['dev-guild-id'])
-        #await sync_app_commands(command_tree, guild) # Uncomment to sync commands
-        print(f'We have logged in as {client.user}')
-
-    @client.event
-    async def on_message(message):
-        if message.author == client.user:
-            return
-
-        if message.content.startswith('$hello'):
-            await message.channel.send('Hello!')
-
+def run_bot(client:discord.Client, config:dict):
     try:
         client.run(config["bot-token"])
     except discord.errors.LoginFailure as error:
@@ -54,6 +40,22 @@ intents.message_content = True
 
 client = discord.Client(intents=intents)
 command_tree = CommandTree(client)
+
+
+@client.event
+async def on_ready():
+    guild = await client.fetch_guild(config['dev-guild-id'])
+    #await sync_app_commands(command_tree, guild) # Uncomment to sync commands
+    print(f'We have logged in as {client.user}')
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+
+    if message.content.startswith('$hello'):
+        await message.channel.send('Hello!')
+
 
 @command_tree.command(name="ping", description="Replies with \"pong\".")
 async def ping(interaction:discord.Interaction) -> None:
