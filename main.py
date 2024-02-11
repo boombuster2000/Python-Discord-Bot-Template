@@ -1,6 +1,7 @@
 from modules.config_loader import ConfigLoader
 import discord
 from discord.app_commands import CommandTree
+from discord.ext import commands
 
 def load_config():
     try:
@@ -38,7 +39,7 @@ if not config: print("Fill in the details in [./config.json].")
 intents = discord.Intents.default()
 intents.message_content = True
 
-client = discord.Client(intents=intents)
+client = commands.Bot(command_prefix="$", intents=intents)
 command_tree = CommandTree(client)
 
 
@@ -55,7 +56,6 @@ async def on_message(message):
 
     if message.content.startswith('$hello'):
         await message.channel.send('Hello!')
-
 
 @command_tree.command(name="ping", description="Replies with \"pong\".")
 async def ping(interaction:discord.Interaction) -> None:
