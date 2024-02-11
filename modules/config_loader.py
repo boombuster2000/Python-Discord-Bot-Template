@@ -22,7 +22,7 @@ class ConfigLoader():
             print("Invalid JSON in config file, resetting config file.")
             self.create_config_file()
 
-    def update_config_file(self, new_config):
+    def update_config_file(self, new_config) -> None:
         with open(self.CONFIG_FP, "w") as config_file:
             json.dump(new_config, config_file, indent=4)
 
