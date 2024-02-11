@@ -10,8 +10,7 @@ class ConfigLoader():
     def create_config_file(self):
         with open(self.CONFIG_FP, "w") as config_file:
             json.dump(self.CONFIG_TEMPLATE, config_file, indent=4)
-            print("Fill in details in config file.")
-
+            
     def load_config(self):
         try:
             with open(self.CONFIG_FP, "r") as config_file:
