@@ -44,7 +44,7 @@ def run_bot(client:discord.Client, command_tree:CommandTree, config:dict):
 
 config_loader = ConfigLoader()
 config = load_config()
-if not config: print("Fill in the detials in [./config.json].")
+if not config: print("Fill in the details in [./config.json].")
 
 intents = discord.Intents.default()
 intents.message_content = True
