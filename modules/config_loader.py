@@ -21,7 +21,8 @@ class ConfigLoader():
             print("Invalid JSON in config file, resetting config file.")
             self.create_config_file()
 
-    def is_config_file_filled_in(self, config):
+    def is_config_file_filled_in(self):
+        config = self.load_config()
         for key in self.CONFIG_TEMPLATE.keys():
             if config[key] == self.CONFIG_TEMPLATE[key]: 
                 return True
