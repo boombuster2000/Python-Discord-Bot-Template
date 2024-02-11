@@ -4,6 +4,8 @@ from discord.app_commands import CommandTree
 from discord.ext import commands
 
 def load_config():
+    config_loader = ConfigLoader()
+    
     try:
         config = config_loader.load_config()
         if config_loader.is_config_file_filled_in(): return config
@@ -32,7 +34,7 @@ def run_bot(client:discord.Client, config:dict):
     except discord.errors.LoginFailure as error:
         print(error.args[0])
 
-config_loader = ConfigLoader()
+
 config = load_config()
 if not config: print("Fill in the details in [./config.json].")
 
