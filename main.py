@@ -1,5 +1,6 @@
 from modules.config_loader import ConfigLoader
 import discord
+from discord.app_commands import CommandTree
 
 def load_config():
     try:
@@ -12,9 +13,19 @@ def load_config():
         config_loader.create_config_file()
         return None
 
-def run_bot(client):
+async def sync_app_commands(command_tree:CommandTree, guild:discord.Guild = None):
+    commands_synced = []
+    commands_synced = await command_tree.sync(guild = guild)
+    
+    for command in commands_synced:
+        print(f"{command.name} synced.")
+
+
+def run_bot(client:discord.Client, command_tree:CommandTree, config:dict):
     @client.event
     async def on_ready():
+        guild = client.get_guild(config['dev-guild-id'])
+        await sync_app_commands(command_tree, guild)
         print(f'We have logged in as {client.user}')
 
     @client.event
@@ -39,6 +50,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 
 client = discord.Client(intents=intents)
+command_tree = CommandTree(client)
 
-if config: run_bot(client)
+if config: run_bot(client, command_tree, config)
 
