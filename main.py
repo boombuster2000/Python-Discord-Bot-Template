@@ -24,6 +24,7 @@ def run_bot(client):
 
         if message.content.startswith('$hello'):
             await message.channel.send('Hello!')
+
     try:
         client.run(config["bot-token"])
     except discord.errors.LoginFailure as error:
