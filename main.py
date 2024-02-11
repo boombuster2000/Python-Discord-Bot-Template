@@ -19,11 +19,26 @@ def load_config(config_fp="./config.json"):
         print("Invalid JSON in config file, resetting config file.")
         create_config_file()
 
+def is_config_file_filled_in(config, config_fp="./config.json"):
+    CONFIG_FILE_TEMPLATE = {
+        "bot-token":"BOT-TOKEN"
+    }
+
+    for key in CONFIG_FILE_TEMPLATE.keys():
+        if config[key] == CONFIG_FILE_TEMPLATE[key]: 
+            return True
+        
+    return False
+
 config = None
 
 try:
     config = load_config()
+    if is_config_file_filled_in(config): print("Fill in details in config file.")
+    
 except (FileNotFoundError):
     create_config_file()
 
-if config: print(config)
+
+
+
