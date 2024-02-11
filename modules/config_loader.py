@@ -4,7 +4,7 @@ class ConfigLoader():
     def __init__(self, config_fp = "./config.json") -> None:
         self.CONFIG_TEMPLATE = {
             "bot-token":"BOT-TOKEN",
-            "dev-guild-id":0,
+            "dev-guild-id":"GUILD-ID",
         }
         self.CONFIG_FP = config_fp
 
