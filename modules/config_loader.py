@@ -25,8 +25,11 @@ class ConfigLoader():
     def is_config_file_filled_in(self) -> bool: 
         config = self.load_config()
         for key in self.CONFIG_TEMPLATE.keys():
-            if config[key] == self.CONFIG_TEMPLATE[key]: 
-                return True
+            try:
+                if config[key] == self.CONFIG_TEMPLATE[key]: 
+                    return True
+            except KeyError:
+                print(f"{key} not filled in.")
             
         return False
     
