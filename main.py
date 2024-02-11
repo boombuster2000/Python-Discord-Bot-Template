@@ -28,7 +28,7 @@ async def sync_app_commands(command_tree:CommandTree, guild:discord.Guild = None
 def run_bot(client:discord.Client, command_tree:CommandTree, config:dict):
     @client.event
     async def on_ready():
-        guild = client.get_guild(config['dev-guild-id'])
+        guild = await client.fetch_guild(config['dev-guild-id'])
         await sync_app_commands(command_tree, guild)
         print(f'We have logged in as {client.user}')
 
