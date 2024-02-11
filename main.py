@@ -52,5 +52,11 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 command_tree = CommandTree(client)
 
+@command_tree.command(name="ping", description="Replies with \"pong\".")
+async def ping(interaction:discord.Interaction) -> None:
+    await interaction.response.send_message("pong")
+
+
+
 if config: run_bot(client, command_tree, config)
 
