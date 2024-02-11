@@ -1,5 +1,6 @@
 from modules.config_loader import ConfigLoader
 import discord
+from discord.app_commands import CommandTree
 
 def load_config():
     try:
@@ -12,8 +13,9 @@ def load_config():
         config_loader.create_config_file()
         return None
 
-async def sync_app_commands(globally=True):
+async def sync_app_commands(client, globally=True):
     pass
+
 
 def run_bot(client):
     @client.event
@@ -44,6 +46,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 
 client = discord.Client(intents=intents)
+command_tree = CommandTree(client)
 
 if config: run_bot(client)
 
