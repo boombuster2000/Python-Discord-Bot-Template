@@ -36,7 +36,9 @@ def run_bot(client:discord.Client, config:dict):
 
 def main():
     config = load_config()
-    if not config: print("Fill in the details in [./config.json].")
+    if not config: 
+        print("Fill in the details in [./config.json].")
+        return
 
     intents = discord.Intents.default()
     intents.message_content = True
@@ -53,7 +55,7 @@ def main():
     async def ping(interaction:discord.Interaction) -> None:
         await interaction.response.send_message("pong", ephemeral=True)
 
-    if config: run_bot(bot, config)
+    run_bot(bot, config)
 
-if __name__ == "__name__":
+if __name__ == "__main__":
     main()
