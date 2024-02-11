@@ -1,4 +1,5 @@
 from modules.config_loader import ConfigLoader
+import discord
 
 def load_config():
     try:
@@ -16,5 +17,5 @@ config_loader = ConfigLoader()
 config = load_config()
 if not config: print("Fill in the detials in {./config.json}.")
 
-
-
+intents = discord.Intents.default()
+intents.message_content = True
