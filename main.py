@@ -14,7 +14,7 @@ def load_config():
         return None
 
 async def sync_app_commands(command_tree:CommandTree, guild:discord.Guild = None):
-    if guild: print(f"\nSyncing commands to {guild.name}")
+    if guild: print(f"\nSyncing commands to [{guild.name}]")
     else: print(f"\nSyncing commands globally")
 
     commands_synced = []
@@ -29,7 +29,7 @@ def run_bot(client:discord.Client, command_tree:CommandTree, config:dict):
     @client.event
     async def on_ready():
         guild = await client.fetch_guild(config['dev-guild-id'])
-        await sync_app_commands(command_tree, guild)
+        #await sync_app_commands(command_tree, guild) # Uncomment to sync commands
         print(f'We have logged in as {client.user}')
 
     @client.event
@@ -57,7 +57,7 @@ command_tree = CommandTree(client)
 
 @command_tree.command(name="ping", description="Replies with \"pong\".")
 async def ping(interaction:discord.Interaction) -> None:
-    await interaction.response.send_message("pong")
+    await interaction.response.send_message("pong", ephemeral=True)
 
 if config: run_bot(client, command_tree, config)
 
