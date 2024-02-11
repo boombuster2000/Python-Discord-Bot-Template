@@ -22,8 +22,8 @@ class ConfigLoader():
             self.create_config_file()
 
     def is_config_file_filled_in(self, config):
-        for key in self.CONFIG_FILE_TEMPLATE.keys():
-            if config[key] == self.CONFIG_FILE_TEMPLATE[key]: 
+        for key in self.CONFIG_TEMPLATE.keys():
+            if config[key] == self.CONFIG_TEMPLATE[key]: 
                 return True
             
         return False
