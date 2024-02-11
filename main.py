@@ -5,7 +5,7 @@ from discord.ext import commands
 
 def load_config():
     config_loader = ConfigLoader()
-    
+
     try:
         config = config_loader.load_config()
         if config_loader.is_config_file_filled_in(): return config
@@ -34,24 +34,26 @@ def run_bot(client:discord.Client, config:dict):
     except discord.errors.LoginFailure as error:
         print(error.args[0])
 
+def main():
+    config = load_config()
+    if not config: print("Fill in the details in [./config.json].")
 
-config = load_config()
-if not config: print("Fill in the details in [./config.json].")
+    intents = discord.Intents.default()
+    intents.message_content = True
 
-intents = discord.Intents.default()
-intents.message_content = True
+    bot = commands.Bot(command_prefix=config["bot-prefix"], intents=intents)
 
-bot = commands.Bot(command_prefix=config["bot-prefix"], intents=intents)
+    @bot.event
+    async def on_ready():
+        guild = await bot.fetch_guild(config['dev-guild-id'])
+        #await sync_app_commands(command_tree, guild) # Uncomment to sync commands
+        print(f'We have logged in as {bot.user}')
 
-@bot.event
-async def on_ready():
-    guild = await bot.fetch_guild(config['dev-guild-id'])
-    #await sync_app_commands(command_tree, guild) # Uncomment to sync commands
-    print(f'We have logged in as {bot.user}')
+    @bot.tree.command(name="ping", description="Replies with \"pong\".")
+    async def ping(interaction:discord.Interaction) -> None:
+        await interaction.response.send_message("pong", ephemeral=True)
 
-@bot.tree.command(name="ping", description="Replies with \"pong\".")
-async def ping(interaction:discord.Interaction) -> None:
-    await interaction.response.send_message("pong", ephemeral=True)
+    if config: run_bot(bot, config)
 
-if config: run_bot(bot, config)
-
+if __name__ == "__name__":
+    main()
