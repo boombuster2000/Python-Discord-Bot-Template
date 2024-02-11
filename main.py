@@ -39,7 +39,7 @@ if not config: print("Fill in the details in [./config.json].")
 intents = discord.Intents.default()
 intents.message_content = True
 
-bot = commands.Bot(command_prefix="$", intents=intents)
+bot = commands.Bot(command_prefix=config["bot-prefix"], intents=intents)
 
 @bot.event
 async def on_ready():
