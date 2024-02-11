@@ -40,8 +40,6 @@ intents = discord.Intents.default()
 intents.message_content = True
 
 client = commands.Bot(command_prefix="$", intents=intents)
-command_tree = CommandTree(client)
-
 
 @client.event
 async def on_ready():
@@ -49,15 +47,7 @@ async def on_ready():
     #await sync_app_commands(command_tree, guild) # Uncomment to sync commands
     print(f'We have logged in as {client.user}')
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
-
-@command_tree.command(name="ping", description="Replies with \"pong\".")
+@client.tree.command(name="ping", description="Replies with \"pong\".")
 async def ping(interaction:discord.Interaction) -> None:
     await interaction.response.send_message("pong", ephemeral=True)
 
