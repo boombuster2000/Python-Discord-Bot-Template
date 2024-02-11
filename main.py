@@ -1,6 +1,7 @@
 from modules.config_loader import ConfigLoader
 import discord
 from discord.app_commands import CommandTree
+from discord.ext import commands
 
 def load_config():
     try:
@@ -38,28 +39,17 @@ if not config: print("Fill in the details in [./config.json].")
 intents = discord.Intents.default()
 intents.message_content = True
 
-client = discord.Client(intents=intents)
-command_tree = CommandTree(client)
+bot = commands.Bot(command_prefix="$", intents=intents)
 
-
-@client.event
+@bot.event
 async def on_ready():
-    guild = await client.fetch_guild(config['dev-guild-id'])
+    guild = await bot.fetch_guild(config['dev-guild-id'])
     #await sync_app_commands(command_tree, guild) # Uncomment to sync commands
-    print(f'We have logged in as {client.user}')
+    print(f'We have logged in as {bot.user}')
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
-
-
-@command_tree.command(name="ping", description="Replies with \"pong\".")
+@bot.tree.command(name="ping", description="Replies with \"pong\".")
 async def ping(interaction:discord.Interaction) -> None:
     await interaction.response.send_message("pong", ephemeral=True)
 
-if config: run_bot(client, config)
+if config: run_bot(bot, config)
 
