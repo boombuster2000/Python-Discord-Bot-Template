@@ -12,6 +12,21 @@ def load_config():
         config_loader.create_config_file()
         return None
 
+def run_bot(client):
+    @client.event
+    async def on_ready():
+        print(f'We have logged in as {client.user}')
+
+    @client.event
+    async def on_message(message):
+        if message.author == client.user:
+            return
+
+        if message.content.startswith('$hello'):
+            await message.channel.send('Hello!')
+
+    client.run(config["bot-token"])
+
 
 config_loader = ConfigLoader()
 config = load_config()
@@ -22,16 +37,5 @@ intents.message_content = True
 
 client = discord.Client(intents=intents)
 
-@client.event
-async def on_ready():
-    print(f'We have logged in as {client.user}')
+if config: run_bot(client)
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
-
-client.run(config["bot-token"])
