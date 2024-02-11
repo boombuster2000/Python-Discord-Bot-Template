@@ -14,12 +14,16 @@ def load_config():
         return None
 
 async def sync_app_commands(command_tree:CommandTree, guild:discord.Guild = None):
+    if guild: print(f"\nSyncing commands to {guild.name}")
+    else: print(f"\nSyncing commands globally")
+
     commands_synced = []
     commands_synced = await command_tree.sync(guild = guild)
     
     for command in commands_synced:
-        print(f"{command.name} synced.")
+        print(f"[{command.name}] synced.")
 
+    print(f"Total Commands Synced: {len(commands_synced)}\n")
 
 def run_bot(client:discord.Client, command_tree:CommandTree, config:dict):
     @client.event
@@ -41,7 +45,6 @@ def run_bot(client:discord.Client, command_tree:CommandTree, config:dict):
     except discord.errors.LoginFailure as error:
         print(error.args[0])
 
-
 config_loader = ConfigLoader()
 config = load_config()
 if not config: print("Fill in the details in [./config.json].")
@@ -55,8 +58,6 @@ command_tree = CommandTree(client)
 @command_tree.command(name="ping", description="Replies with \"pong\".")
 async def ping(interaction:discord.Interaction) -> None:
     await interaction.response.send_message("pong")
-
-
 
 if config: run_bot(client, command_tree, config)
 
