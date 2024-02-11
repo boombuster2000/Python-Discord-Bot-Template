@@ -12,9 +12,14 @@ def load_config():
         config_loader.create_config_file()
         return None
 
+async def sync_app_commands(globally=True):
+    pass
+
 def run_bot(client):
     @client.event
     async def on_ready():
+        
+
         print(f'We have logged in as {client.user}')
 
     @client.event
