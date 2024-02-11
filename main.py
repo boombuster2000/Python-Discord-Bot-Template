@@ -5,7 +5,7 @@ from discord.app_commands import CommandTree
 def load_config():
     try:
         config = config_loader.load_config()
-        if not config_loader.is_config_file_filled_in(): return config
+        if config_loader.is_config_file_filled_in(): return config
 
         return None
 
@@ -44,7 +44,7 @@ def run_bot(client:discord.Client, command_tree:CommandTree, config:dict):
 
 config_loader = ConfigLoader()
 config = load_config()
-if not config: print("Fill in the detials in {./config.json}.")
+if not config: print("Fill in the detials in [./config.json].")
 
 intents = discord.Intents.default()
 intents.message_content = True
