@@ -48,6 +48,10 @@ def main():
     async def ping(interaction:discord.Interaction):
         await interaction.response.send_message("pong", ephemeral=True)
 
+    @bot.tree.command(name="pong", description="Replies with \"ping\".")
+    async def ping(interaction:discord.Interaction):
+        await interaction.response.send_message("ping", ephemeral=True)
+        
     try:
         bot.run(config["bot-token"])
     except discord.errors.LoginFailure as error:
