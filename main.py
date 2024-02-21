@@ -20,7 +20,6 @@ async def sync_app_commands(command_tree:CommandTree, guild:discord.Guild = None
     if guild: print(f"\nSyncing commands to [{guild.name}]")
     else: print(f"\nSyncing commands globally")
 
-    commands_synced = []
     commands_synced = await command_tree.sync(guild = guild)
     
     for command in commands_synced:
