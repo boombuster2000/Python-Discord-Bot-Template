@@ -45,7 +45,7 @@ def main():
         print(f'We have logged in as {bot.user}')
 
     @bot.tree.command(name="ping", description="Replies with \"pong\".")
-    async def ping(interaction:discord.Interaction) -> None:
+    async def ping(interaction:discord.Interaction):
         await interaction.response.send_message("pong", ephemeral=True)
 
     try:
