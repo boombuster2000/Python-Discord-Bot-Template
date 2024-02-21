@@ -27,12 +27,6 @@ async def sync_app_commands(command_tree:CommandTree, guild:discord.Guild = None
 
     print(f"Total Commands Synced: {len(commands_synced)}\n")
 
-def run_bot(client:discord.Client, config:dict):
-    try:
-        client.run(config["bot-token"])
-    except discord.errors.LoginFailure as error:
-        print(error.args[0])
-
 def main():
     config = load_config()
     if not config: 
@@ -54,7 +48,10 @@ def main():
     async def ping(interaction:discord.Interaction) -> None:
         await interaction.response.send_message("pong", ephemeral=True)
 
-    run_bot(bot, config)
+    try:
+        bot.run(config["bot-token"])
+    except discord.errors.LoginFailure as error:
+        print(error.args[0])
 
 if __name__ == "__main__":
     main()
