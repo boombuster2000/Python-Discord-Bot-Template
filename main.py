@@ -40,7 +40,7 @@ def main():
 
     @bot.event
     async def on_ready():
-        guild = discord.Object(config['dev-guild-id'])
+        guild = discord.Object(int(config['dev-guild-id']))
         await sync_app_commands(bot.tree, guild) # Uncomment to sync commands
         print(f'We have logged in as {bot.user}')
 
