@@ -17,7 +17,7 @@ def load_config():
         return None
 
 async def sync_app_commands(command_tree:CommandTree, guild = None):
-    if guild: print(f"\nSyncing commands to [{guild.name}]")
+    if guild: print(f"\nSyncing commands to [{guild}]")
     else: print(f"\nSyncing commands globally")
 
     commands_synced = await command_tree.sync(guild = guild)
@@ -40,7 +40,7 @@ def main():
 
     @bot.event
     async def on_ready():
-        guild = await bot.fetch_guild(config['dev-guild-id'])
+        guild = discord.Object(config['dev-guild-id'])
         await sync_app_commands(bot.tree, guild) # Uncomment to sync commands
         print(f'We have logged in as {bot.user}')
 
