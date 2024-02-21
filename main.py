@@ -40,7 +40,7 @@ def main():
 
     @bot.event
     async def on_ready():
-        guild = discord.Object(int(config['dev-guild-id']))
+        guild = bot.get_guild(int(config['dev-guild-id']))
         await sync_app_commands(bot.tree, guild) # Uncomment to sync commands
         print(f'We have logged in as {bot.user}')
 
@@ -49,7 +49,7 @@ def main():
         await interaction.response.send_message("pong", ephemeral=True)
 
     @bot.tree.command(name="pong", description="Replies with \"ping\".")
-    async def ping(interaction:discord.Interaction):
+    async def pong(interaction:discord.Interaction):
         await interaction.response.send_message("ping", ephemeral=True)
 
     try:
