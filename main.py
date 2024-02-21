@@ -16,7 +16,7 @@ def load_config():
         config_loader.create_config_file()
         return None
 
-async def sync_app_commands(command_tree:CommandTree, guild:discord.Guild = None):
+async def sync_app_commands(command_tree:CommandTree, guild = None):
     if guild: print(f"\nSyncing commands to [{guild.name}]")
     else: print(f"\nSyncing commands globally")
 
@@ -51,7 +51,7 @@ def main():
     @bot.tree.command(name="pong", description="Replies with \"ping\".")
     async def ping(interaction:discord.Interaction):
         await interaction.response.send_message("ping", ephemeral=True)
-        
+
     try:
         bot.run(config["bot-token"])
     except discord.errors.LoginFailure as error:
