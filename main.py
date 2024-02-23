@@ -42,16 +42,12 @@ def main():
     @bot.event
     async def on_ready():
         guild = await bot.fetch_guild(config['dev-guild-id'])
-        await sync_app_commands(bot.tree, guild) # Uncomment to sync commands
+        await sync_app_commands(bot.tree)#, guild) # Uncomment to sync commands
         print(f'We have logged in as {bot.user}')
 
     @bot.tree.command(name="ping", description="Replies with \"pong\".")
     async def ping(interaction:discord.Interaction):
         await interaction.response.send_message("pong", ephemeral=True)
-
-    @bot.tree.command(name="pong", description="Replies with \"ping\".")
-    async def pong(interaction:discord.Interaction):
-        await interaction.response.send_message("ping", ephemeral=True)
 
     try:
         bot.run(config["bot-token"])
