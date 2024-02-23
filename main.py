@@ -1,6 +1,7 @@
 from modules.config_loader import ConfigLoader
 import discord
 from discord.ext import commands
+from typing import Literal
 
 def load_config():
     config_loader = ConfigLoader()
@@ -35,7 +36,7 @@ def main():
         await interaction.response.send_message("pong", ephemeral=True)
 
     @bot.tree.command(name="sync", description="Syncs commands with discord", guild=discord.Object(config["dev-guild-id"]))
-    async def sync(interaction:discord.Interaction):
+    async def sync(interaction:discord.Interaction, globally:Literal["True", "False"]):
         guild = await bot.fetch_guild(config["dev-guild-id"])
         commands_synced_message = ""
 
