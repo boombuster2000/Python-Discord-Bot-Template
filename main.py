@@ -42,7 +42,7 @@ def main():
 
     @bot.event
     async def on_ready():
-        await sync_app_commands(bot.tree, discord.Object(config["dev-guild-id"]))
+        #await sync_app_commands(bot.tree, discord.Object(config["dev-guild-id"]))
         print(f'We have logged in as {bot.user}')
 
     @bot.tree.command(name="ping", description="Replies with \"pong\".")
@@ -51,9 +51,11 @@ def main():
 
     @bot.tree.command(name="sync", description="Syncs commands with discord", guild=discord.Object(config["dev-guild-id"]))
     async def sync(interaction:discord.Interaction, globally:Literal["True", "False"]):
-        guild = await bot.fetch_guild(config["dev-guild-id"])
+        guild = None
+        globally = globally == "True"
         commands_synced_message = ""
 
+        if not globally: guild = await bot.fetch_guild(config["dev-guild-id"])
         if guild: commands_synced_message = f"**__Syncing commands to [{guild}]__**\n"
         else: commands_synced_message = f"**__Syncing commands globally__**\n"
 
