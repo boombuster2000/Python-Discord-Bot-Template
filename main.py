@@ -42,7 +42,7 @@ def main():
     @bot.event
     async def on_ready():
         guild = await bot.fetch_guild(config['dev-guild-id'])
-        await sync_app_commands(bot.tree)#, guild) # Uncomment to sync commands
+        #await sync_app_commands(bot.tree, guild) # Uncomment to sync commands
         print(f'We have logged in as {bot.user}')
 
     @bot.tree.command(name="ping", description="Replies with \"pong\".")
