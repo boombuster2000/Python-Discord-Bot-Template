@@ -38,14 +38,16 @@ def main():
     @bot.tree.command(name="sync", description="Syncs commands with discord", guild=discord.Object(config["dev-guild-id"]))
     async def sync(interaction:discord.Interaction):
         guild = await bot.fetch_guild(config["dev-guild-id"])
+        commands_synced_message = ""
 
-        if guild: await interaction.response.send_message(f"\nSyncing commands to [{guild}]", ephemeral=True)
-        else: await interaction.response.send_message(f"\nSyncing commands globally", ephemeral=True)
+        if guild: commands_synced_message = f"\nSyncing commands to [{guild}]\n"
+        else: commands_synced_message = f"\nSyncing commands globally\n"
+
+        await interaction.response.send_message(content=commands_synced_message)
 
         if guild: bot.tree.copy_global_to(guild=guild)
         commands_synced = await bot.tree.sync(guild = guild)
         
-        commands_synced_message = ""
         for command in commands_synced:
             commands_synced_message += f"[{command.name}] synced.\n"
 
