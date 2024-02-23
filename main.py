@@ -40,8 +40,8 @@ def main():
         guild = await bot.fetch_guild(config["dev-guild-id"])
         commands_synced_message = ""
 
-        if guild: commands_synced_message = f"\nSyncing commands to [{guild}]\n"
-        else: commands_synced_message = f"\nSyncing commands globally\n"
+        if guild: commands_synced_message = f"**__Syncing commands to [{guild}]__**\n"
+        else: commands_synced_message = f"**__Syncing commands globally__**\n"
 
         await interaction.response.send_message(content=commands_synced_message)
 
