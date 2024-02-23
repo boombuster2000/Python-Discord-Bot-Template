@@ -1,6 +1,5 @@
 from modules.config_loader import ConfigLoader
 import discord
-from discord.app_commands import CommandTree
 from discord.ext import commands
 
 def load_config():
