@@ -16,6 +16,19 @@ def load_config():
         config_loader.create_config_file()
         return None
 
+async def sync_app_commands(command_tree, guild = None):
+    if guild: print(f"\nSyncing commands to [{guild}]")
+    else: print(f"\nSyncing commands globally")
+
+    if guild: command_tree.copy_global_to(guild=guild)
+    commands_synced = await command_tree.sync(guild = guild)
+    
+    for command in commands_synced:
+        print(f"[{command.name}] synced.")
+
+    print(f"Total Commands Synced: {len(commands_synced)}\n")
+
+
 def main():
     config = load_config()
     if not config: 
@@ -29,6 +42,7 @@ def main():
 
     @bot.event
     async def on_ready():
+        await sync_app_commands(bot.tree, discord.Object(config["dev-guild-id"]))
         print(f'We have logged in as {bot.user}')
 
     @bot.tree.command(name="ping", description="Replies with \"pong\".")
