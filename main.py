@@ -16,23 +16,17 @@ def load_config():
         config_loader.create_config_file()
         return None
 
-async def sync_app_commands(command_tree:CommandTree, guild:discord.Guild = None):
-    if guild: print(f"\nSyncing commands to [{guild.name}]")
+async def sync_app_commands(command_tree:CommandTree, guild = None):
+    if guild: print(f"\nSyncing commands to [{guild}]")
     else: print(f"\nSyncing commands globally")
 
-    commands_synced = []
+    if guild: command_tree.copy_global_to(guild=guild)
     commands_synced = await command_tree.sync(guild = guild)
     
     for command in commands_synced:
         print(f"[{command.name}] synced.")
 
     print(f"Total Commands Synced: {len(commands_synced)}\n")
-
-def run_bot(client:discord.Client, config:dict):
-    try:
-        client.run(config["bot-token"])
-    except discord.errors.LoginFailure as error:
-        print(error.args[0])
 
 def main():
     config = load_config()
@@ -48,14 +42,17 @@ def main():
     @bot.event
     async def on_ready():
         guild = await bot.fetch_guild(config['dev-guild-id'])
-        #await sync_app_commands(command_tree, guild) # Uncomment to sync commands
+        #await sync_app_commands(bot.tree, guild) # Uncomment to sync commands
         print(f'We have logged in as {bot.user}')
 
     @bot.tree.command(name="ping", description="Replies with \"pong\".")
-    async def ping(interaction:discord.Interaction) -> None:
+    async def ping(interaction:discord.Interaction):
         await interaction.response.send_message("pong", ephemeral=True)
 
-    run_bot(bot, config)
+    try:
+        bot.run(config["bot-token"])
+    except discord.errors.LoginFailure as error:
+        print(error.args[0])
 
 if __name__ == "__main__":
     main()
