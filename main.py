@@ -41,7 +41,7 @@ def main():
 
     @bot.event
     async def on_ready():
-        guild = bot.get_guild(int(config['dev-guild-id']))
+        guild = await bot.fetch_guild(config['dev-guild-id'])
         await sync_app_commands(bot.tree, guild) # Uncomment to sync commands
         print(f'We have logged in as {bot.user}')
 
