@@ -56,8 +56,8 @@ def main():
         commands_synced_message = ""
 
         if not globally: guild = await bot.fetch_guild(config["dev-guild-id"])
-        if guild: commands_synced_message = f"**__Syncing commands to [{guild}]__**\n"
-        else: commands_synced_message = f"**__Syncing commands globally__**\n"
+        if guild: commands_synced_message = f"**__Syncing commands to `{guild}`__**\n"
+        else: commands_synced_message = f"**__Syncing commands `globally`__**\n"
 
         await interaction.response.send_message(content=commands_synced_message)
 
@@ -65,7 +65,7 @@ def main():
         commands_synced = await bot.tree.sync(guild = guild)
         
         for command in commands_synced:
-            commands_synced_message += f"[{command.name}] synced.\n"
+            commands_synced_message += f"`{command.name}` - synced.\n"
 
         await interaction.edit_original_response(content=commands_synced_message)
 
